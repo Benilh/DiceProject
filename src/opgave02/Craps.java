@@ -6,7 +6,25 @@ public class Craps {
         playCraps(0);
     }
 
-    public static int playCraps(int crapsResultNext) {
+    
+/*
+ FEEDBACK TIL playCraps: Metoden er ufuldstændig og har to store problemer.
+
+ 1. DEN IGNORERER RESULTATET FRA rollForPoint:
+    Når spillet går videre til næste fase (et "point" er sat), kalder du rollForPoint,
+    men du gemmer ikke svaret (true/false). Du skal gemme svaret i en variabel for at
+    kunne afgøre, om spilleren vandt eller tabte til sidst.
+    Korrekt måde:
+    boolean vandtSpilleren = rollForPoint(point);
+    if (vandtSpilleren) { ... } else { ... }
+
+ 2. DU SAMMENLIGNER STRINGS MED ==:
+    I Java skal man ALTID bruge .equals() til at sammenligne indholdet af strenge.
+    `==` tjekker, om det er det præcis samme objekt i hukommelsen, hvilket sjældent er sandt.
+    Forkert: if (result == "uafgjort")
+    Korrekt: if (result.equals("uafgjort"))
+*/
+public static int playCraps(int crapsResultNext) {
         int crapsResult = rollDie() + rollDie();
         System.out.println(crapsResult);
         String result = "uafgjort";
@@ -19,7 +37,19 @@ public class Craps {
         return crapsResult;
     }
 
-    public static int rollForPoint(int crapsResult) {
+    
+/*
+ FEEDBACK TIL rollForPoint: Metoden følger ikke reglerne fra opgavebeskrivelsen.
+
+ 1. DEN MANGLER EN WHILE-LØKKE:
+    Metoden skal blive ved med at kaste, INDTIL resultatet er enten 7 (tab) eller det oprindelige "point" (sejr).
+    Din metode kaster kun én gang. Du skal bruge en `while`-løkke for at blive ved med at kaste.
+
+ 2. DEN RETURNERER DEN FORKERTE DATATYPE:
+    Metoden skal ifølge opgaven returnere `boolean` (true for sejr, false for tab).
+    Din metode returnerer `int` (det nye kast). Den skal altså laves om til at returnere en boolean.
+*/
+public static int rollForPoint(int crapsResult) {
         int crapsResultNext = rollDie() + rollDie();
         System.out.println("Det næste rul er: " + crapsResultNext);
         return crapsResultNext;
