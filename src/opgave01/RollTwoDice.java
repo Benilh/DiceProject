@@ -20,6 +20,12 @@ public class RollTwoDice {
     // spørg om vil rulle terning
     // opdater rollcount, vis resultat af terning
 
+    // FEEDBACK (punkt 3): Din `playDie()`-metode er blevet meget stor og håndterer næsten hele spillets logik.
+    // Opgavebeskrivelsen opfordrer til at bruge strukturen fra `RollOneDie` som inspiration,
+    // hvilket typisk betyder at opdele koden i mindre metoder for at gøre den mere overskuelig.
+    // Forslag:
+    // 1. Omdøb `playDie()` til f.eks. `playTwoDice()`.
+    // 2. Flyt al koden, der udskriver den endelige statistik efter løkken, til en separat metode, f.eks. `printGameStatistics()`.
     public static int playDie() {
         int playDieHighestNumber = 0;
         int[] numberStatistics = {0, 0, 0, 0, 0, 0};
@@ -33,6 +39,15 @@ public class RollTwoDice {
 
             // gem højeste kast
             if (dieFace1 + dieFace2 > playDieHighestNumber) playDieHighestNumber = dieFace1 + dieFace2;
+
+            // FEEDBACK (punkt 2): Der er en logisk fejl i den nuværende metode til at tælle antallet af 1'ere, 2'ere, osv.
+            // Koden giver et forkert resultat i de tilfælde, hvor de to terninger viser samme værdi.
+            // Problem: Din kode bruger en `if`-betingelse med `||` (eller). Hvis du slår (2, 2), vil betingelsen
+            // `dieFace1 == 2 || dieFace2 == 2` være sand, og koden vil kun lægge 1 til tælleren for 2'ere.
+            // Den burde lægge 2 til, da der blev slået to 2'ere.
+            // Løsning: Behandl hver terning separat for at sikre korrekt optælling:
+            // numberStatistics[dieFace1 - 1]++;
+            // numberStatistics[dieFace2 - 1]++;
 
             // gem numre
             if (dieFace1 == 1 || dieFace2 == 1) {
@@ -81,6 +96,9 @@ public class RollTwoDice {
     // rollDie metode
     // rul terningen
 
+    // FEEDBACK (punkt 1): Opgavebeskrivelsen specificerer, at I skal lave en metode `public static int[] rollDice()`,
+    // som returnerer et array med de to terningers værdier. I din nuværende kode har du en `rollDie()`-metode,
+    // som du kalder to gange. Prøv at lave én metode, der slår med begge terninger og returnerer resultaterne samlet i et array.
     public static int rollDie() {
         return (int) (Math.random() * 6 + 1);
     }
